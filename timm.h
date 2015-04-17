@@ -17,8 +17,8 @@
 * Created 2015-04-18 by Kyrylo Nykytuk aka wanim
 */
 
-#ifndef MHEAP_H_INCLUDED
-#define MHEAP_H_INCLUDED
+#ifndef TIMM_H_INCLUDED
+#define TIMM_H_INCLUDED
 #include <stdint.h>
 
 /** ---------------Common defines --------------- */
@@ -121,4 +121,4 @@ int8_t timm_get_block_status(void* ptr);
 */
 LenT timm_get_free_blocks();
 
-#endif /* MHEAP_H_INCLUDED */
+#endif /* TIMM_H_INCLUDED */
