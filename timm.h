@@ -1,7 +1,7 @@
 /**
-* @file	timm.h
-* @brief	Header file for a Tiny Memory Manager (TIMM)
-* @brief   This file contains description, function prototypes, constants and other definitions.
+* @file   timm.h
+* @brief  Header file for a Tiny Memory Manager (TIMM)
+* @brief  This file contains description, function prototypes, constants and other definitions.
 *
 *  TIMM is a memory manager for embedded devices.
 *  Its main purpose is to allocation/deallocation of memory blocks of customizable sizes.
