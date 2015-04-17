@@ -65,7 +65,7 @@ typedef uint8_t BnumT;  /* type for holding number of bytes in block */
 * @remark	Prepares memory map block by initializing with zero.
 */
 #ifdef STATICALLY_ALLOCATED_HEAP
-void my_heap_init();
+void timm_init();
 #endif /* STATICALLY_ALLOCATED_HEA */
 
 /**
@@ -77,7 +77,7 @@ void my_heap_init();
 * @remark	Prepares memory map block by initializing with zero.
 */
 #ifdef DYNAMICALLY_ALLOCATED_HEAP
-uint8_t heap_init(void* loc, LenT siz, BnumT bnum);
+uint8_t timm_init(void* loc, LenT siz, BnumT bnum);
 #endif /* DYNAMICALLY_ALLOCATED_HEAP */
 
 /**
@@ -89,7 +89,7 @@ uint8_t heap_init(void* loc, LenT siz, BnumT bnum);
 *			to the first chunk of memory of appropriate size or null pointer
 *			if there is no free space
 */
-void* heap_new(LenT siz);
+void* timm_new(LenT siz);
 
 /**
 * @brief	Function for memory deallocation
@@ -100,7 +100,7 @@ void* heap_new(LenT siz);
 * @pre		Heap initialization was successful
 * @remark	Checks if provided address is indeed in heap
 */
-void heap_delete(void* dst, LenT siz);
+void timm_delete(void* dst, LenT siz);
 
 /**
 * @brief      Function for getting the number of blocks of memory available for memory manager.
@@ -114,11 +114,11 @@ LenT heap_get_blocks_count();
 * @return	[1]     if block is reserved
 * @return	[-1]    if address is out of memory map range
 */
-int8_t get_block_status(void* ptr);
+int8_t timm_get_block_status(void* ptr);
 
 /**
 * @brief	Function for getting the number of free blocks of memory.
 */
-LenT heap_get_free_blocks();
+LenT timm_get_free_blocks();
 
 #endif /* MHEAP_H_INCLUDED */
