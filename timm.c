@@ -25,7 +25,7 @@ static struct
 } MHeap;
 
 #ifdef DYNAMICALLY_ALLOCATED_HEAP
-uint8_t heap_init(void* loc, LenT siz, BnumT bnum)
+uint8_t timm_init(void* loc, LenT siz, BnumT bnum)
 {
     if(siz/bnum > MAX_MAP_SIZE || loc == 0)
     {
@@ -47,7 +47,7 @@ uint8_t heap_init(void* loc, LenT siz, BnumT bnum)
 #endif /* DYNAMICALLY_ALLOCATED_HEAP */
 
 #ifdef STATICALLY_ALLOCATED_HEAP
-void my_heap_init()
+void timm_init()
 {
     LenT i = 0;
     while( i < HEAP_MAP_SIZE)
@@ -58,7 +58,7 @@ void my_heap_init()
 }
 #endif /* STATICALLY_ALLOCATED_HEAP */
 
-void* heap_new(LenT siz)
+void* timm_new(LenT siz)
 {
     char* blk_st;
     LenT len;
@@ -100,7 +100,7 @@ void* heap_new(LenT siz)
     return NULL;
 }
 
-void heap_delete(void* dst, LenT siz)
+void timm_delete(void* dst, LenT siz)
 {
     if(siz && dst >= (void*)HEAP_START && dst < (void*)HEAP_END)
     {
@@ -118,12 +118,12 @@ void heap_delete(void* dst, LenT siz)
     }
 }
 
-LenT heap_get_blocks_count()
+LenT timm_get_blocks_count()
 {
     return HEAP_MAP_SIZE;
 }
 
-int8_t get_block_status(void* ptr)
+int8_t timm_get_block_status(void* ptr)
 {
     if(ptr >= (void*)MHeap.map_table && ptr < HEAP_MAP_END)
     {
@@ -132,7 +132,7 @@ int8_t get_block_status(void* ptr)
     return -1;
 }
 
-LenT heap_get_free_blocks()
+LenT timm_get_free_blocks()
 {
     LenT cnt = 0;
     LenT i = 0;
