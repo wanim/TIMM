@@ -58,9 +58,9 @@ typedef uint8_t BnumT;  /* type for holding number of bytes in block */
 
 
 /**
-  * @brief   Heap initialization function used when static mode is defined
-  * @param		 Accepts no parameters,all needed definitions are in header file
-  * @pre     Defines should contain valid data
+  * @brief      Heap initialization function used when static mode is defined
+  * @param		Accepts no parameters,all needed definitions are in header file
+  * @pre        Defines should contain valid data
   * @return		Returns no value
   * @remark		Prepares memory map block by initializing with zero.
   */
@@ -69,10 +69,10 @@ void my_heap_init();
 #endif /* STATICALLY_ALLOCATED_HEA */
 
 /**
-  * @brief   Heap initialization function used when dynamic mode is defined
-  * @param		 [in]    loc Address of the beginning of the heap
-  * @param		 [in]    size Length in bytes of heap
-  * @param		 [in]    bnum Block size in bytes
+  * @brief      Heap initialization function used when dynamic mode is defined
+  * @param		[in]    loc Address of the beginning of the heap
+  * @param		[in]    size Length in bytes of heap
+  * @param		[in]    bnum Block size in bytes
   * @return		Returns 1 if is initialization was successful, or 0 if failed
   * @remark		Prepares memory map block by initializing with zero.
   */
@@ -81,43 +81,43 @@ uint8_t heap_init(void* loc, LenT siz, BnumT bnum);
 #endif /* DYNAMICALLY_ALLOCATED_HEAP */
 
 /**
-  * @brief   Function for memory allocation in heap.
-  * @param		 [in]    siz Size in bytes
+  * @brief      Function for memory allocation in heap.
+  * @param		[in]    siz Size in bytes
   * @return		Pointer to allocated memory or null pointer if memory allocation has failed
-  * @pre		   Heap initialization was successful
+  * @pre		Heap initialization was successful
   * @remark		Scans memory map from the beginning to the end and returns pointer
-  *          to the first chunk of memory of appropriate size or null pointer
-  *          if there is no free space
+  *             to the first chunk of memory of appropriate size or null pointer
+  *             if there is no free space
   */
 void* heap_new(LenT siz);
 
 /**
-  * @brief   Function for memory deallocation
-  * @param		 [in]    dst Start address
-  * @param		 [in]    siz Size in bytes
+  * @brief      Function for memory deallocation
+  * @param		[in]    dst Start address
+  * @param		[in]    siz Size in bytes
   * @return		void
   * @warning	Be careful, make sure you do not delete more than needed
-  * @pre		   Heap initialization was successful
+  * @pre		Heap initialization was successful
   * @remark		Checks if provided address is indeed in heap
   */
 void heap_delete(void* dst, LenT siz);
 
 /**
-  * @brief   Function for getting the number of blocks of memory available for memory manager.
+  * @brief      Function for getting the number of blocks of memory available for memory manager.
   */
 LenT heap_get_blocks_count();
 
 /**
-  * @brief   Function for checking block status
-  * @param		 [in]    ptr Points to particular block in memory map segment
-  * @return	 [0]     if block is free
-  * @return	 [1]     if block is reserved
-  * @return	 [-1]    if address is out of memory map range
+  * @brief      Function for checking block status
+  * @param		[in]    ptr Points to particular block in memory map segment
+  * @return		[0]     if block is free
+  * @return		[1]     if block is reserved
+  * @return		[-1]    if address is out of memory map range
   */
 int8_t get_block_status(void* ptr);
 
 /**
-  * @brief   Function for getting the number of free blocks of memory.
+  * @brief      Function for getting the number of free blocks of memory.
   */
 LenT heap_get_free_blocks();
 
