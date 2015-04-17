@@ -1,3 +1,3 @@
 # TIMM
-Tiny Memory Meneger
+Tiny Memory Manager for embedded devices
   
