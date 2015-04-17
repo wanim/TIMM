@@ -33,6 +33,13 @@ typedef uint8_t BnumT;  /* type for holding number of bytes in block */
 //#define NULL ((void *)0)
 /** --------------------------------------------- */
 
+#if defined DYNAMICALLY_ALLOCATED_HEAP && defined STATICALLY_ALLOCATED_HEAP
+#error Please define only one between DYNAMICALLY_ALLOCATED_HEAP and STATICALLY_ALLOCATED_HEAP
+#endif
+
+#if !defined DYNAMICALLY_ALLOCATED_HEAP && !defined STATICALLY_ALLOCATED_HEAP
+#error Please define one between DYNAMICALLY_ALLOCATED_HEAP and STATICALLY_ALLOCATED_HEAP
+#endif
 
 /** --------Defines for static mode only--------- */
 #ifdef STATICALLY_ALLOCATED_HEAP
