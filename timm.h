@@ -105,7 +105,7 @@ void timm_delete(void* dst, LenT siz);
 /**
 * @brief      Function for getting the number of blocks of memory available for memory manager.
 */
-LenT heap_get_blocks_count();
+LenT timm_get_blocks_count();
 
 /**
 * @brief	Function for checking block status
