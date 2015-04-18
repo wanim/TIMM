@@ -12,7 +12,7 @@
 static struct
 {
 #ifdef STATICALLY_ALLOCATED_HEAP
-    char    map_table[HEAP_MAP_SIZE];
+    char    map_table[H_MAP_SIZE];
 #endif /* STATICALLY_ALLOCATED_HEAP */
 #ifdef DYNAMICALLY_ALLOCATED_HEAP
     char    map_table[MAX_MAP_SIZE];
@@ -37,7 +37,7 @@ uint8_t timm_init(void* loc, LenT siz, BnumT bnum)
     MHeap.msize  = siz/bnum;
     MHeap.mend   = MHeap.map_table + MHeap.msize;
     LenT i = 0;
-    while(i < HEAP_MAP_SIZE)
+    while(i < H_MAP_SIZE)
     {
         MHeap.map_table[i] = FREE_BLOCK;
         i++;
@@ -50,7 +50,7 @@ uint8_t timm_init(void* loc, LenT siz, BnumT bnum)
 void timm_init()
 {
     LenT i = 0;
-    while( i < HEAP_MAP_SIZE)
+    while( i < H_MAP_SIZE)
     {
         MHeap.map_table[i] = FREE_BLOCK;
         i++;
@@ -67,12 +67,12 @@ void* timm_new(LenT siz)
 
     if(siz)
     {
-        siz = (siz % BYTES_PER_BLOCK) ? ((siz / BYTES_PER_BLOCK) + 1) : (siz / BYTES_PER_BLOCK);
-        while( ptr < (char*)HEAP_MAP_END)
+        siz = (siz % B_PER_BLOCK) ? ((siz / B_PER_BLOCK) + 1) : (siz / B_PER_BLOCK);
+        while( ptr < (char*)H_MAP_END)
         {
             while(*ptr != FREE_BLOCK)       /* look for the 1st free block */
             {
-                if(ptr >= (char*)HEAP_MAP_END)
+                if(ptr >= (char*)H_MAP_END)
                 {
                     return NULL;            /* no free blocks */
                 }
@@ -82,7 +82,7 @@ void* timm_new(LenT siz)
             offset = ptr - MHeap.map_table;
             blk_st = ptr;                   /* start of free block */
             len = 0;
-            while(*ptr == FREE_BLOCK && ptr < (char*)HEAP_MAP_END)  /* check if block is long enough */
+            while(*ptr == FREE_BLOCK && ptr < (char*)H_MAP_END)  /* check if block is long enough */
             {
                 len++;
                 if(len == siz)
@@ -91,7 +91,7 @@ void* timm_new(LenT siz)
                     {
                         *blk_st++ = RESERVED_BLOCK;
                     }
-                    return ((char*)HEAP_START + offset*BYTES_PER_BLOCK); /* memory has been allocated */
+                    return ((char*)HEAP_START + offset * B_PER_BLOCK); /* memory has been allocated */
                 }
                 ptr++;
             }
@@ -107,11 +107,11 @@ void timm_delete(void* dst, LenT siz)
         LenT offset;
         char* map_ptr;
 
-        offset = ((char*)dst - (char*)HEAP_START) / BYTES_PER_BLOCK;    /* get offset in memory map */
-        siz = (siz % BYTES_PER_BLOCK) ? ((siz / BYTES_PER_BLOCK) + 1) : (siz / BYTES_PER_BLOCK);
+        offset = (dst - (void*)HEAP_START) / B_PER_BLOCK;    /* get offset in memory map */
+        siz = (siz % B_PER_BLOCK) ? ((siz / B_PER_BLOCK) + 1) : (siz / B_PER_BLOCK);
         map_ptr = MHeap.map_table + offset;
 
-        while(siz-- && map_ptr < (char*)HEAP_MAP_END)
+        while(siz-- && map_ptr < (char*)H_MAP_END)
         {
             *map_ptr++ = FREE_BLOCK;
         }
@@ -120,12 +120,12 @@ void timm_delete(void* dst, LenT siz)
 
 LenT timm_get_blocks_count()
 {
-    return HEAP_MAP_SIZE;
+    return H_MAP_SIZE;
 }
 
 int8_t timm_get_block_status(void* ptr)
 {
-    if(ptr >= (void*)MHeap.map_table && ptr < HEAP_MAP_END)
+    if(ptr >= (void*)H_MAP_START && ptr < (void*)H_MAP_END)
     {
         return (*((char*)ptr) == FREE_BLOCK)? 0 : 1;
     }
@@ -137,7 +137,7 @@ LenT timm_get_free_blocks()
     LenT cnt = 0;
     LenT i = 0;
 
-    while(i < HEAP_MAP_SIZE)
+    while(i < H_MAP_SIZE)
     {
         if(MHeap.map_table[i] == FREE_BLOCK)
         {
@@ -148,12 +148,24 @@ LenT timm_get_free_blocks()
     return cnt;
 }
 
+void* timm_virt2real(void* ptr)
+{
+    LenT offset;
+    if(ptr >= (void*)H_MAP_START && ptr < (void*)H_MAP_END)
+    {
+        offset = ptr - H_MAP_START;
+        ptr = (char*)HEAP_START + offset * B_PER_BLOCK;
+        return ptr;
+    }
+    return NULL;
+}
+
 void print_map()        /* bonus utility for printing memory map to standard output */
 {
     uint16_t row = 0;
 
     printf("\t0\t8\t16\t24");
-    for(uint16_t i = 0; i < HEAP_MAP_SIZE; i++)
+    for(uint16_t i = 0; i < H_MAP_SIZE; i++)
     {
         if((i % 32) == 0)
         {
