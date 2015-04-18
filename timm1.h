@@ -96,8 +96,8 @@ uint8_t timm_init(void* loc, LenT siz, BnumT bnum);
 * @return	Pointer to allocated memory or null pointer if memory allocation has failed
 * @pre		Heap initialization was successful
 * @remark	Scans memory map from the beginning to the end and returns pointer
-*			to the first chunk of memory of appropriate size or null pointer
-*			if there is no free space
+*	        to the first chunk of memory of appropriate size or null pointer
+*	        if there is no free space
 */
 void* timm_new(LenT siz);
 
