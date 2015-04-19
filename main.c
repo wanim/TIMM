@@ -17,7 +17,7 @@ int main()
 
 
     int* my_ptr = (int*)timm_new(12);
-    printf("%pt, %p\n", pt, my_ptr);
+    //printf("%pt, %p\n", pt, my_ptr);
     //*my_ptr = 0x11223344;
     int* my_ptr1 = (int*)timm_new(16);
     //*my_ptr1 = 0x66778899;
