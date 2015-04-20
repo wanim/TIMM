@@ -163,15 +163,17 @@ void* timm_virt2real(void* ptr)
 void print_map()        /* bonus utility for printing memory map to standard output */
 {
     uint16_t row = 0;
+    uint16_t len = 0;
 
     printf("\t0\t8\t16\t24");
-    for(uint16_t i = 0; i < H_MAP_SIZE; i++)
+    while( len < H_MAP_SIZE)
     {
-        if((i % 32) == 0)
+        if((len % 32) == 0)
         {
             printf("\n %u\t", row);
             row += 32;
         }
-        printf("%c" ,(MHeap.map_table[i])? '1': '0');
+        printf("%c" ,(MHeap.map_table[len])? '1': '0');
+        len++;
     }
 }
